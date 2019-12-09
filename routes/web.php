@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('discussions','DiscussionsController');
 #Route::post('/discussion-index','DiscussionsController@save_page');
+Route::resource('discussions/{discussion}/replies','RepliesController');
