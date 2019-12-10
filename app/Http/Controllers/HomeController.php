@@ -3,6 +3,7 @@
 namespace StudentsForum\Http\Controllers;
 
 use Illuminate\Http\Request;
+use StudentsForum\Discussion;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $discussions = Discussion::where('user_id',auth()->id())->orderBy('created_at','desc')->paginate(5);
+        return view('home')->with('discussions',$discussions);
     }
 }

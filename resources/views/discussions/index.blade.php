@@ -16,6 +16,8 @@
 </div>
 @endforeach
 
+{{$discussions->appends(['channel' => request()->query('channel')])->links()}}
+
 @else
 <div class="alert alert-danger text-center">
     No data found

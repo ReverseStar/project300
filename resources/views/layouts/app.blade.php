@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -37,6 +38,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @auth
+                        <li class="nav-item p-2" >
+                            <a href="{{ route('users.notifications') }}" class="nav-link">
+                                <span class="badge badge-danger my-3" style="color:#fff">
+                                    {{auth()->user()->unreadNotifications->count()}}
+                                    Unread Notifications
+                                </span>
+                            </a>
+                        </li>
+                        @endauth
                         <li class="nav-item p-2">
                             <a class="nav-link mt-2" style="color:black;" href="/home">Home <span
                                     class="sr-only"></span></a>
@@ -107,9 +118,11 @@
                         </div>
                         <ul class="list-group">
                             @foreach($channels as $channel)
-                            <li class="list-group-item">
-                                {{$channel->name}}
-                            </li>
+                                <li class="list-group-item">
+                                <a href="{{ route('discussions.index') }}?channel={{ $channel->slug }}">
+                                        {{$channel->name}}
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>

@@ -15,6 +15,11 @@ class ChannelsTableSeeder extends Seeder
     public function run()
     {
         Channel::create([
+            'name' => 'All Department',
+            'slug' => str_slug('All Department')
+        ]);
+
+        Channel::create([
             'name' => 'Computer Science & Engineering',
             'slug' => str_slug('Computer Science & Engineering')
         ]);

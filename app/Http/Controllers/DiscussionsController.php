@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use StudentsForum\Http\Requests\CreateDiscussionRequest;
 use StudentsForum\Http\Controllers\Controller;
 use StudentsForum\Discussion;
+use StudentsForum\Reply;
 // use StudentsForum\Http\Controllers\Discussion;
 
 
@@ -28,8 +29,8 @@ public function __construct()
         // return view('discussions.index');
         #return view('discussions.index')->paginate(5);
         return view('discussions.index',[
-           'discussions' => Discussion::paginate(5),
-       ]);
+           'discussions' => Discussion::filterByChannels()->paginate(3),
+        ]);
     }
 
     /**
@@ -84,7 +85,7 @@ public function __construct()
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -108,5 +109,13 @@ public function __construct()
     public function destroy($id)
     {
         //
+    }
+
+    public function reply(Discussion $discussion,Reply $reply)
+    {
+        $discussion->best($reply);
+
+        session()->flash('success','Marked as best reply');
+        return redirect()->back();
     }
 }

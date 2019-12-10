@@ -1,9 +1,10 @@
 <?php
 
 namespace StudentsForum\Http\Controllers;
-use StudentsForum\Discussion;
 use Illuminate\Http\Request;
+use StudentsForum\Discussion;
 use StudentsForum\Http\Controllers\Controller;
+use StudentsForum\Notifications\NewReplyAdded;
 use StudentsForum\Http\Requests\CreateReplyRequest;
 
 class RepliesController extends Controller
@@ -40,6 +41,13 @@ class RepliesController extends Controller
             'content' => $request->content,
             'discussion_id' => $discussion->id
         ]);
+
+        if($discussion->author->id != auth()->user()->id)
+        {
+            $discussion->author->notify(new NewReplyAdded($discussion));
+        }
+
+
         session()->flash('success','Reply Added Successfully');
         return redirect()->back();
     }
